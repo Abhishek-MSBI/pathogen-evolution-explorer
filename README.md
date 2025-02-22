@@ -5,7 +5,7 @@ colorFrom: blue
 colorTo: green
 sdk: streamlit
 sdk_version: 1.42.2
-app_file: main.py
+app_file: app.py
 pinned: false
 short_description: A web-based application for analyzing pathogen genomic sequences
 ---
@@ -49,7 +49,7 @@ pip install streamlit biopython plotly pandas numpy
 
 4. Run the application:
 ```bash
-streamlit run main.py
+streamlit run app.py
 ```
 
 ### Option 2: Manual Download and Setup
@@ -92,7 +92,7 @@ cd pathogen-evolution-explorer
 │   ├── sequence_analysis.py  # Sequence analysis tools
 │   ├── sequence_stats.py    # Statistical calculations
 │   └── visualization.py     # Visualization functions
-└── main.py            # Main application file
+└── app.py            # Main application file
 ```
 
 ## Future Features
@@ -128,3 +128,4 @@ If using GitHub Desktop:
 3. Select the project folder
 4. Make initial commit
 5. Publish repository
+````
