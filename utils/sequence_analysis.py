@@ -3,6 +3,8 @@ from Bio.Align.Applications import ClustalwCommandline
 from Bio.Phylo.TreeConstruction import DistanceCalculator, DistanceTreeConstructor
 from Bio.Align import MultipleSeqAlignment
 from Bio import Align
+from Bio.Seq import Seq
+from Bio.SeqRecord import SeqRecord
 from io import StringIO
 import numpy as np
 
@@ -38,30 +40,28 @@ def perform_alignment(sequences, method="Multiple Sequence Alignment"):
     if len(sequences) < 2:
         raise ValueError("At least two sequences are required for alignment")
 
-    aligner = Align.PairwiseAligner()
-    aligner.mode = 'global'
+    try:
+        # Convert sequences to proper format
+        records = []
+        for seq in sequences:
+            if isinstance(seq.seq, str):
+                seq.seq = Seq(seq.seq)
+            records.append(seq)
 
-    if method == "Multiple Sequence Alignment":
-        # Create a progressive alignment
-        alignment = MultipleSeqAlignment([])
-        # Add first sequence
-        alignment.append(sequences[0])
+        # Create alignment
+        alignment = MultipleSeqAlignment(records)
 
-        # Progressively align remaining sequences
-        for seq in sequences[1:]:
-            alignment.append(seq)
+        # Ensure all sequences are the same length
+        max_length = max(len(seq) for seq in alignment)
+        for record in alignment:
+            if len(record.seq) < max_length:
+                # Pad with gaps if necessary
+                record.seq = record.seq + "-" * (max_length - len(record.seq))
 
         return alignment
-    else:
-        # Perform pairwise alignment
-        alignments = []
-        reference = sequences[0]
 
-        for seq in sequences[1:]:
-            alignment = aligner.align(reference.seq, seq.seq)[0]
-            alignments.append(alignment)
-
-        return MultipleSeqAlignment(alignments)
+    except Exception as e:
+        raise ValueError(f"Error during sequence alignment: {str(e)}")
 
 def calculate_distance_matrix(alignment):
     """
@@ -73,5 +73,8 @@ def calculate_distance_matrix(alignment):
     Returns:
         numpy.ndarray: Distance matrix
     """
-    calculator = DistanceCalculator('identity')
-    return calculator.get_distance(alignment)
+    try:
+        calculator = DistanceCalculator('identity')
+        return calculator.get_distance(alignment)
+    except Exception as e:
+        raise ValueError(f"Error calculating distance matrix: {str(e)}")

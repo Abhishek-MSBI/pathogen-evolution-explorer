@@ -16,9 +16,18 @@ def create_phylogenetic_tree(alignment, tree_type="Circular"):
         plotly.graph_objects.Figure: Interactive tree visualization
     """
     try:
-        # Initialize distance calculator explicitly
+        # Ensure we have a valid alignment
+        if not alignment or len(alignment) < 2:
+            raise ValueError("Invalid alignment: Must contain at least 2 sequences")
+
+        # Initialize distance calculator with identity model
         calculator = DistanceCalculator('identity')
-        dm = calculator.get_distance(alignment)
+
+        # Calculate distance matrix
+        try:
+            dm = calculator.get_distance(alignment)
+        except Exception as e:
+            raise ValueError(f"Error calculating distance matrix: {str(e)}")
 
         # Construct tree
         constructor = DistanceTreeConstructor()
@@ -38,6 +47,9 @@ def create_phylogenetic_tree(alignment, tree_type="Circular"):
             y = i
             coords.append((x, y, clade.name))
 
+        if not coords:
+            raise ValueError("No valid coordinates extracted from tree")
+
         xs, ys, labels = zip(*coords)
 
         if tree_type == "Circular":
@@ -50,13 +62,14 @@ def create_phylogenetic_tree(alignment, tree_type="Circular"):
                 theta=theta,
                 text=labels,
                 mode='markers+text',
-                name='Species'
+                name='Species',
+                textposition='middle right'
             ))
 
             fig.update_layout(
                 polar=dict(
                     radialaxis=dict(visible=True, title="Genetic Distance"),
-                    angularaxis=dict(visible=True)
+                    angularaxis=dict(visible=True, direction="clockwise")
                 )
             )
         else:
@@ -66,7 +79,8 @@ def create_phylogenetic_tree(alignment, tree_type="Circular"):
                 y=ys,
                 text=labels,
                 mode='markers+text',
-                name='Species'
+                name='Species',
+                textposition='middle right'
             ))
 
             fig.update_layout(
@@ -78,7 +92,8 @@ def create_phylogenetic_tree(alignment, tree_type="Circular"):
         fig.update_layout(
             title="Phylogenetic Tree",
             height=600,
-            template="plotly_white"
+            template="plotly_white",
+            margin=dict(l=50, r=50, t=50, b=50)
         )
 
         return fig
