@@ -5,9 +5,7 @@ import numpy as np
 from Bio.Phylo.TreeConstruction import DistanceCalculator, DistanceTreeConstructor
 
 def create_phylogenetic_tree(alignment, tree_type="Circular"):
-    """
-    Create an interactive phylogenetic tree visualization
-    """
+    """Create an interactive phylogenetic tree visualization"""
     try:
         # Validate input
         if not alignment or len(alignment) < 2:

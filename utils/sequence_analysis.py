@@ -1,5 +1,4 @@
 from Bio import SeqIO, AlignIO
-from Bio.Align.Applications import ClustalwCommandline
 from Bio.Phylo.TreeConstruction import DistanceCalculator, DistanceTreeConstructor
 from Bio.Align import MultipleSeqAlignment
 from Bio import Align
@@ -9,9 +8,7 @@ from io import StringIO
 import numpy as np
 
 def process_fasta(file_content):
-    """
-    Process FASTA file content and return sequences
-    """
+    """Process FASTA file content and return sequences"""
     try:
         sequences = list(SeqIO.parse(file_content, "fasta"))
         if not sequences:
@@ -21,23 +18,23 @@ def process_fasta(file_content):
         raise ValueError(f"Invalid FASTA format: {str(e)}")
 
 def perform_alignment(sequences, method="Multiple Sequence Alignment"):
-    """
-    Perform sequence alignment using specified method
-    """
+    """Perform sequence alignment using specified method"""
     if len(sequences) < 2:
         raise ValueError("At least two sequences are required for alignment")
 
     try:
-        # Ensure sequences are proper SeqRecord objects
+        # Ensure sequences are proper SeqRecord objects with appropriate IDs
         records = []
-        for seq in sequences:
+        for i, seq in enumerate(sequences):
             if not isinstance(seq, SeqRecord):
                 seq = SeqRecord(
                     Seq(str(seq.seq)),
-                    id=seq.id,
-                    name=seq.name,
-                    description=seq.description
+                    id=f"seq_{i+1}",
+                    name=f"sequence_{i+1}",
+                    description=f"Sample sequence {i+1}"
                 )
+            elif not seq.id:
+                seq.id = f"seq_{i+1}"
             records.append(seq)
 
         # Create initial alignment
@@ -63,9 +60,7 @@ def perform_alignment(sequences, method="Multiple Sequence Alignment"):
         raise ValueError(f"Error during sequence alignment: {str(e)}")
 
 def calculate_distance_matrix(alignment):
-    """
-    Calculate distance matrix from alignment
-    """
+    """Calculate distance matrix from alignment"""
     try:
         # Create a new calculator instance
         calculator = DistanceCalculator('identity')
