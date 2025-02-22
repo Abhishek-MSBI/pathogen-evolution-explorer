@@ -18,6 +18,26 @@ with open('assets/app_style.css') as f:
 
 def main():
     st.title("🧬 Pathogen Evolution Explorer")
+    
+    # Add detailed instructions
+    st.markdown("""
+    ### How to Test the Application:
+
+    1. **Using Sample Dataset:**
+       - Select "Use sample dataset" from the sidebar
+       - Choose "SARS-CoV-2 Variants" from the dropdown menu
+       - The phylogenetic tree will appear automatically
+
+    2. **Uploading Your Own Data:**
+       - Select "Upload FASTA file" from the sidebar
+       - Click "Browse files" to upload your FASTA format file
+       - The tree will generate after successful upload
+
+    3. **Visualization Options:**
+       - Choose between "Circular Tree" or "Rectangular Tree" layouts
+       - Select your preferred alignment method
+    """)
+
     st.markdown("""
     Explore and analyze evolutionary relationships of pathogens using genomic data.
     Upload your FASTA files or use our sample datasets to generate phylogenetic trees.
