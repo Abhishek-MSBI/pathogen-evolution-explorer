@@ -1,0 +1,25 @@
+Project Idea: Pathogen Evolution Explorer
+
+Develop a web-based application that allows users to explore and analyze the evolutionary relationships of pathogens (e.g., viruses or bacteria) using genomic data. This project combines interactive visualization with core bioinformatics analyses—all implementable on free platforms like Replit and Lovable.
+
+Overview
+What It Does:
+
+Data Input & Curation: Users can either upload FASTA files or select from a curated dataset (e.g., representative sequences from influenza, coronavirus, etc.).
+Sequence Analysis: Integrate bioinformatics libraries (such as Biopython) to perform tasks like multiple sequence alignment and basic phylogenetic tree construction.
+Interactive Visualization: Use web technologies (e.g., D3.js or Plotly) to generate interactive phylogenetic trees that help users visualize evolutionary relationships over time.
+User Interface: Build an intuitive UI within Lovable (or a similar tool available on Replit) so that everything—from data upload to visualization—happens in a seamless, browser-based environment.
+Key Features
+Data Acquisition & Upload:
+Support for file uploads (FASTA format) and integration with free APIs (like NCBI or EMBL) to fetch genomic data.
+Bioinformatics Analysis:
+Perform sequence alignments using lightweight algorithms available in Biopython.
+Generate phylogenetic trees based on the computed alignments to illustrate evolutionary pathways.
+Interactive Visualizations:
+Utilize JavaScript libraries to create zoomable, clickable phylogenetic trees that display additional details (e.g., mutation events, collection dates) on demand.
+Educational Components:
+Include tooltips and information panels to explain bioinformatics concepts, making the project valuable both as a research tool and as an educational resource.
+Technology Stack
+Backend: Python on Replit, leveraging libraries like Biopython for sequence analysis and SciPy for statistical computations.
+Frontend: HTML, CSS, and JavaScript for building the UI and interactive data visualizations. Use libraries such as D3.js or Plotly to render dynamic phylogenetic trees.
+Deployment: Utilize Replit’s free hosting for both backend and frontend, ensuring that the entire development, testing, and deployment cycle occurs within a free, cloud-based environment.
