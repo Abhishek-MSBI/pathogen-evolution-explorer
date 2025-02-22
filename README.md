@@ -11,6 +11,8 @@ pinned: false
 
 # 🧬 Pathogen Evolution Explorer
 
+[![Hugging Face Spaces](https://img.shields.io/badge/Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/srabhishek/Pathogenevolutionexplorer)
+
 A web-based application for analyzing pathogen genomic sequences and exploring their evolutionary relationships. Built with Streamlit and Biopython.
 
 ## Features
@@ -32,6 +34,7 @@ A web-based application for analyzing pathogen genomic sequences and exploring t
 2. Install the required packages:
 ```bash
 pip install streamlit biopython plotly pandas numpy
+
 
 ```
 
