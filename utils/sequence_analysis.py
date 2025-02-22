@@ -11,12 +11,6 @@ import numpy as np
 def process_fasta(file_content):
     """
     Process FASTA file content and return sequences
-
-    Args:
-        file_content: StringIO object containing FASTA data
-
-    Returns:
-        list: List of SeqRecord objects
     """
     try:
         sequences = list(SeqIO.parse(file_content, "fasta"))
@@ -29,13 +23,6 @@ def process_fasta(file_content):
 def perform_alignment(sequences, method="Multiple Sequence Alignment"):
     """
     Perform sequence alignment using specified method
-
-    Args:
-        sequences: List of SeqRecord objects
-        method: String indicating alignment method
-
-    Returns:
-        MultipleSeqAlignment: Aligned sequences
     """
     if len(sequences) < 2:
         raise ValueError("At least two sequences are required for alignment")
@@ -78,12 +65,6 @@ def perform_alignment(sequences, method="Multiple Sequence Alignment"):
 def calculate_distance_matrix(alignment):
     """
     Calculate distance matrix from alignment
-
-    Args:
-        alignment: MultipleSeqAlignment object
-
-    Returns:
-        DistanceMatrix: Distance matrix object
     """
     try:
         # Create a new calculator instance

@@ -7,13 +7,6 @@ from Bio.Phylo.TreeConstruction import DistanceCalculator, DistanceTreeConstruct
 def create_phylogenetic_tree(alignment, tree_type="Circular"):
     """
     Create an interactive phylogenetic tree visualization
-
-    Args:
-        alignment: MultipleSeqAlignment object
-        tree_type: String indicating tree layout type
-
-    Returns:
-        plotly.graph_objects.Figure: Interactive tree visualization
     """
     try:
         # Validate input
@@ -22,12 +15,14 @@ def create_phylogenetic_tree(alignment, tree_type="Circular"):
 
         # Calculate distance matrix
         calculator = DistanceCalculator('identity')
+        print("Creating distance matrix...")  # Debug log
         dm = calculator.get_distance(alignment)
 
         if not dm:
             raise ValueError("Failed to calculate distance matrix")
 
         # Construct tree
+        print("Constructing phylogenetic tree...")  # Debug log
         constructor = DistanceTreeConstructor()
         tree = constructor.build_tree(dm)
 
@@ -95,4 +90,5 @@ def create_phylogenetic_tree(alignment, tree_type="Circular"):
 
         return fig
     except Exception as e:
+        print(f"Debug - Error details: {str(e)}")  # Debug log
         raise Exception(f"Error creating phylogenetic tree: {str(e)}")
