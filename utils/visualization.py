@@ -11,17 +11,21 @@ def create_phylogenetic_tree(alignment, tree_type="Circular"):
         if not alignment or len(alignment) < 2:
             raise ValueError("Invalid alignment: Must contain at least 2 sequences")
 
-        # Calculate distance matrix
+        # Initialize the calculator with identity model
         calculator = DistanceCalculator('identity')
+
+        # Calculate distance matrix
         print("Creating distance matrix...")  # Debug log
         dm = calculator.get_distance(alignment)
 
         if not dm:
             raise ValueError("Failed to calculate distance matrix")
 
+        # Initialize the tree constructor with the calculator
+        constructor = DistanceTreeConstructor(calculator)
+
         # Construct tree
         print("Constructing phylogenetic tree...")  # Debug log
-        constructor = DistanceTreeConstructor()
         tree = constructor.build_tree(dm)
 
         if not tree:
