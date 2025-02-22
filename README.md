@@ -6,20 +6,33 @@ A web-based application for analyzing pathogen genomic sequences and exploring t
 
 - **Sequence Statistics**: Calculate and visualize basic sequence metrics including GC content and length statistics
 - **Sequence Comparison**: Generate similarity matrices and interactive heatmaps to compare multiple sequences
-- **Phylogenetic Analysis**: Create interactive phylogenetic trees to visualize evolutionary relationships
 - **Sample Datasets**: Includes pre-loaded datasets for SARS-CoV-2 variants, Influenza H1N1, and E. coli strains
+- **Phylogenetic Analysis**: *(Under Development)* Interactive phylogenetic tree visualization feature coming soon
 
-## Installation
+## Quick Start
 
-1. Clone the repository:
+### Option 1: Using GitHub Desktop
+1. In GitHub Desktop:
+   - Click File > Clone Repository
+   - Enter URL: `https://github.com/Abhishek-MSBI/pathogen-evolution-explorer`
+   - Choose your local path
+   - Click Clone
+
+2. Install the required packages:
 ```bash
-git clone https://github.com/your-username/pathogen-evolution-explorer.git
-cd pathogen-evolution-explorer
+pip install streamlit biopython plotly pandas numpy
 ```
 
-2. Install dependencies:
+3. Run the application:
 ```bash
-pip install -r requirements.txt
+streamlit run main.py
+```
+
+### Option 2: Manual Download and Setup
+1. Download the project files
+2. Install the required packages:
+```bash
+pip install streamlit biopython plotly pandas numpy
 ```
 
 3. Run the application:
@@ -32,12 +45,12 @@ streamlit run main.py
 1. **Using Sample Datasets**:
    - Select "Use sample dataset" from the sidebar
    - Choose from available sample datasets
-   - Explore the analysis in different tabs
+   - Explore sequence statistics and comparisons in different tabs
 
 2. **Analyzing Your Own Data**:
    - Select "Upload FASTA file" from the sidebar
    - Upload your FASTA format file
-   - View analysis results across all tabs
+   - View analysis results across available tabs
 
 ## Requirements
 
@@ -61,6 +74,13 @@ streamlit run main.py
 └── main.py            # Main application file
 ```
 
+## Future Features
+
+- Enhanced phylogenetic tree visualization
+- Integration with NCBI/EMBL APIs
+- Advanced comparative analysis tools
+- Export functionality for analysis results
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
@@ -68,3 +88,22 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Pushing to GitHub
+
+If using command line:
+```bash
+git init
+git add .
+git commit -m "Initial commit: Pathogen Evolution Explorer application"
+git branch -M main
+git remote add origin https://github.com/Abhishek-MSBI/pathogen-evolution-explorer.git
+git push -u origin main
+```
+
+If using GitHub Desktop:
+1. Open GitHub Desktop
+2. Add Local Repository (File > Add Local Repository)
+3. Select the project folder
+4. Make initial commit
+5. Publish repository
