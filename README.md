@@ -1,4 +1,14 @@
 <<<<<<< HEAD
+---
+title: Pathogen Evolution Explorer
+emoji: 🧬
+colorFrom: blue
+colorTo: green
+sdk: streamlit
+app_file: main.py
+pinned: false
+---
+
 # 🧬 Pathogen Evolution Explorer
 
 A web-based application for analyzing pathogen genomic sequences and exploring their evolutionary relationships. Built with Streamlit and Biopython.
