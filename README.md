@@ -33,13 +33,13 @@ A web-based application for analyzing pathogen genomic sequences and exploring t
    - Click Clone
 
 2. Install the required packages:
+
 ```bash
 pip install streamlit biopython plotly pandas numpy
-
-
 ```
 
 3. Run the application:
+
 ```bash
 streamlit run main.py
 ```
