@@ -16,26 +16,23 @@ def create_phylogenetic_tree(alignment, tree_type="Circular"):
         plotly.graph_objects.Figure: Interactive tree visualization
     """
     try:
-        # Ensure we have a valid alignment
+        # Validate input
         if not alignment or len(alignment) < 2:
             raise ValueError("Invalid alignment: Must contain at least 2 sequences")
 
-        # Initialize distance calculator with identity model
-        calculator = DistanceCalculator('identity')
-
         # Calculate distance matrix
-        try:
-            dm = calculator.get_distance(alignment)
-        except Exception as e:
-            raise ValueError(f"Error calculating distance matrix: {str(e)}")
+        calculator = DistanceCalculator('identity')
+        dm = calculator.get_distance(alignment)
+
+        if not dm:
+            raise ValueError("Failed to calculate distance matrix")
 
         # Construct tree
         constructor = DistanceTreeConstructor()
         tree = constructor.build_tree(dm)
 
-        # Convert tree to newick format
-        tree_string = StringIO()
-        Phylo.write(tree, tree_string, 'newick')
+        if not tree:
+            raise ValueError("Failed to construct phylogenetic tree")
 
         # Create plotly figure
         fig = go.Figure()
@@ -45,7 +42,7 @@ def create_phylogenetic_tree(alignment, tree_type="Circular"):
         for i, clade in enumerate(tree.get_terminals()):
             x = float(clade.branch_length or 0)
             y = i
-            coords.append((x, y, clade.name))
+            coords.append((x, y, clade.name or f"Sequence {i+1}"))
 
         if not coords:
             raise ValueError("No valid coordinates extracted from tree")

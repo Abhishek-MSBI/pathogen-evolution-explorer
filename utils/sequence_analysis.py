@@ -41,22 +41,34 @@ def perform_alignment(sequences, method="Multiple Sequence Alignment"):
         raise ValueError("At least two sequences are required for alignment")
 
     try:
-        # Convert sequences to proper format
+        # Ensure sequences are proper SeqRecord objects
         records = []
         for seq in sequences:
-            if isinstance(seq.seq, str):
-                seq.seq = Seq(seq.seq)
+            if not isinstance(seq, SeqRecord):
+                seq = SeqRecord(
+                    Seq(str(seq.seq)),
+                    id=seq.id,
+                    name=seq.name,
+                    description=seq.description
+                )
             records.append(seq)
 
-        # Create alignment
-        alignment = MultipleSeqAlignment(records)
+        # Create initial alignment
+        alignment = MultipleSeqAlignment([])
+
+        # Add sequences to alignment
+        for record in records:
+            alignment.append(record)
 
         # Ensure all sequences are the same length
-        max_length = max(len(seq) for seq in alignment)
+        max_length = max(len(seq.seq) for seq in alignment)
         for record in alignment:
             if len(record.seq) < max_length:
                 # Pad with gaps if necessary
                 record.seq = record.seq + "-" * (max_length - len(record.seq))
+
+        if not alignment:
+            raise ValueError("Failed to create alignment")
 
         return alignment
 
@@ -71,10 +83,18 @@ def calculate_distance_matrix(alignment):
         alignment: MultipleSeqAlignment object
 
     Returns:
-        numpy.ndarray: Distance matrix
+        DistanceMatrix: Distance matrix object
     """
     try:
+        # Create a new calculator instance
         calculator = DistanceCalculator('identity')
-        return calculator.get_distance(alignment)
+
+        # Calculate the distance matrix
+        dm = calculator.get_distance(alignment)
+
+        if not dm:
+            raise ValueError("Failed to calculate distance matrix")
+
+        return dm
     except Exception as e:
         raise ValueError(f"Error calculating distance matrix: {str(e)}")
