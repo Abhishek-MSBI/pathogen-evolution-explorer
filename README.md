@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🧬 Pathogen Evolution Explorer
 
 A web-based application for analyzing pathogen genomic sequences and exploring their evolutionary relationships. Built with Streamlit and Biopython.
@@ -21,6 +22,7 @@ A web-based application for analyzing pathogen genomic sequences and exploring t
 2. Install the required packages:
 ```bash
 pip install streamlit biopython plotly pandas numpy
+
 ```
 
 3. Run the application:
@@ -107,3 +109,18 @@ If using GitHub Desktop:
 3. Select the project folder
 4. Make initial commit
 5. Publish repository
+=======
+---
+title: Pathogenevolutionexplorer
+emoji: ⚡
+colorFrom: indigo
+colorTo: pink
+sdk: streamlit
+sdk_version: 1.42.2
+app_file: app.py
+pinned: false
+short_description: A web-based application for analyzing pathogen genomic seque
+---
+
+Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
+>>>>>>> space/main
