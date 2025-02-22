@@ -1,0 +1,84 @@
+/* Main container styling */
+.main {
+    padding: 2rem;
+}
+
+/* Headers */
+h1 {
+    color: #1E3D59;
+    font-weight: 700;
+}
+
+h2, h3 {
+    color: #2B4F76;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Sidebar styling */
+.sidebar .sidebar-content {
+    background-color: #f8f9fa;
+}
+
+/* Information panels */
+.stMarkdown {
+    background-color: #ffffff;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+}
+
+/* Success/Error messages */
+.stSuccess, .stError {
+    padding: 1rem;
+    border-radius: 5px;
+    margin: 1rem 0;
+}
+
+/* File uploader */
+.uploadedFile {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    padding: 0.5rem;
+}
+
+/* Plotly chart container */
+.js-plotly-plot {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Footer */
+footer {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #dee2e6;
+    text-align: center;
+    color: #6c757d;
+}
+
+/* Tooltips */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted #666;
+}
+
+/* Progress indicators */
+.stProgress {
+    height: 6px;
+    background-color: #e9ecef;
+}
+
+/* Responsive layout adjustments */
+@media (max-width: 768px) {
+    .main {
+        padding: 1rem;
+    }
+    
+    .stMarkdown {
+        padding: 0.5rem;
+    }
+}
