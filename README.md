@@ -32,29 +32,34 @@ A web-based application for analyzing pathogen genomic sequences and exploring t
    - Choose your local path
    - Click Clone
 
-2. Install the required packages:
+2. Create and activate a virtual environment (recommended):
+```bash
+python -m venv venv
+.\venv\Scripts\activate
+```
 
+3. Install the required packages:
+```bash
+pip install -r requirements.txt
+```
+or install packages individually:
 ```bash
 pip install streamlit biopython plotly pandas numpy
 ```
 
-3. Run the application:
-
+4. Run the application:
 ```bash
 streamlit run main.py
 ```
 
 ### Option 2: Manual Download and Setup
-1. Download the project files
-2. Install the required packages:
+1. Download the project files from GitHub
+2. Navigate to the project directory:
 ```bash
-pip install streamlit biopython plotly pandas numpy
+cd pathogen-evolution-explorer
 ```
 
-3. Run the application:
-```bash
-streamlit run main.py
-```
+3. Follow steps 2-4 from Option 1
 
 ## Usage
 
