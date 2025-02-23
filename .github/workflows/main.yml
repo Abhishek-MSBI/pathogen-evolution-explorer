@@ -26,7 +26,10 @@ jobs:
         HF_TOKEN: ${{ secrets.HUGGING_FACE_API_TOKEN }}
       run: |
         echo "Cloning Hugging Face repository..."
-        git clone "https://$HF_TOKEN@huggingface.co/spaces/srabhishek/PathogenProject.git" space_repo
+        # Configure Git to use HTTPS with credentials in the URL
+        git config --global credential.helper store
+        echo "https://oauth2:${HF_TOKEN}@huggingface.co" > ~/.git-credentials
+        git clone "https://oauth2:${HF_TOKEN}@huggingface.co/spaces/srabhishek/Pathogenevolutionexplorer.git" space_repo
         cd space_repo
         rsync -av --exclude '.git' ../ ./
         git config --global user.name "github-actions[bot]"
