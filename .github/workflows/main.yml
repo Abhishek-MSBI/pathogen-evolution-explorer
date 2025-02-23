@@ -24,16 +24,42 @@ jobs:
         source venv/bin/activate
         pip install --upgrade pip
         pip install -r requirements.txt --verbose
+        pip list  # Debug: List installed packages
+
+    - name: Debug Environment
+      run: |
+        pwd
+        ls -la
+        python --version
+        which python
 
     - name: Sync with Hugging Face Space
       env:
         HUGGING_FACE_API_TOKEN: ${{ secrets.HUGGING_FACE_API_TOKEN }}
       run: |
-        git clone "https://${{ secrets.HUGGING_FACE_API_TOKEN }}@huggingface.co/srabhishek/Pathogenevolutionexplorer.git" space_repo
+        echo "Starting sync with Hugging Face Space..."
+        
+        # Clone the space repository
+        git clone "https://${{ secrets.HUGGING_FACE_API_TOKEN }}@huggingface.co/srabhishek/Pathogenevolutionexplorer.git" space_repo || exit 1
+        
+        # Debug: List files before sync
+        echo "Files before sync:"
+        ls -la space_repo/
+        
+        # Sync files
+        rsync -av --exclude '.git' --exclude 'venv' --stats . space_repo/
+        
+        # Debug: List files after sync
+        echo "Files after sync:"
+        ls -la space_repo/
+        
+        # Configure git and push changes
         cd space_repo
-        rsync -av --exclude '.git' ../ ./
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git add .
-        git commit -m "Sync changes from GitHub repository"
-        git push
+        git status  # Debug: Show git status
+        git commit -m "Sync changes from GitHub repository [skip ci]"
+        git push || { echo "Push failed"; exit 1; }
+        
+        echo "Sync completed successfully"
