@@ -28,7 +28,7 @@ jobs:
       env:
         HUGGING_FACE_API_TOKEN: ${{ secrets.HUGGING_FACE_API_TOKEN }}
       run: |
-        git clone "https://{{ secrets.HUGGING_FACE_API_TOKEN }}@huggingface.co/srabhishek/Pathogenevolutionexplorer.git" space_repo
+        git clone "https://${{ secrets.HUGGING_FACE_API_TOKEN }}@huggingface.co/srabhishek/Pathogenevolutionexplorer.git" space_repo
         cd space_repo
         rsync -av --exclude '.git' ../ ./
         git config user.name "github-actions[bot]"
