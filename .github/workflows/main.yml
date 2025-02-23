@@ -40,26 +40,19 @@ jobs:
         echo "Starting sync with Hugging Face Space..."
         
         # Clone the space repository
-        git clone "https://${{ secrets.HUGGING_FACE_API_TOKEN }}@huggingface.co/srabhishek/Pathogenevolutionexplorer.git" space_repo || exit 1
+        git clone "https://${{ secrets.HUGGING_FACE_API_TOKEN }}@huggingface.co/srabhishek/PathogenProject.git" space_repo || exit 1
         
-        # Debug: List files before sync
-        echo "Files before sync:"
-        ls -la space_repo/
+        # Change to the cloned repository directory
+        cd space_repo
         
         # Sync files
-        rsync -av --exclude '.git' --exclude 'venv' --stats . space_repo/
-        
-        # Debug: List files after sync
-        echo "Files after sync:"
-        ls -la space_repo/
+        rsync -av --exclude '.git' ../ ./
         
         # Configure git and push changes
-        cd space_repo
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git add .
-        git status  # Debug: Show git status
         git commit -m "Sync changes from GitHub repository [skip ci]"
-        git push || { echo "Push failed"; exit 1; }
+        git push "https://${{ secrets.HUGGING_FACE_API_TOKEN }}@huggingface.co/srabhishek/PathogenProject.git" || { echo "Push failed"; exit 1; }
         
         echo "Sync completed successfully"
