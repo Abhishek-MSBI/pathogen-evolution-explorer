@@ -28,12 +28,11 @@ jobs:
       env:
         HUGGING_FACE_API_TOKEN: ${{ secrets.HUGGING_FACE_API_TOKEN }}
       run: |
-        git clone https://huggingface.co/spaces/srabhishek/PathogenProject space_repo
+        git clone https://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@huggingface.co/spaces/srabhishek/PathogenProject space_repo
         cd space_repo
-        git remote set-url origin https://{{ secrets.HUGGING_FACE_API_TOKEN }}@huggingface.co/spaces/srabhishek/PathogenProject
         rsync -av --exclude '.git' ../ ./
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git add .
         git commit -m "Sync changes from GitHub repository"
-        git push
+        git push https://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@huggingface.co/spaces/srabhishek/PathogenProject.git
