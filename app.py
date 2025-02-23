@@ -1,11 +1,18 @@
 import streamlit as st
 import pandas as pd
 from io import StringIO
+import os
+from dotenv import load_dotenv
+import requests
 from utils.sequence_analysis import process_fasta, perform_alignment
 from utils.visualization import create_phylogenetic_tree
 from utils.sample_data import get_sample_data
 from utils.sequence_stats import calculate_sequence_stats, compare_sequences
-import plotly.graph_objects as go # Added import for heatmap
+import plotly.graph_objects as go
+
+# Load environment variables
+load_dotenv()
+hugging_face_api_token = os.getenv('HUGGING_FACE_API_TOKEN')
 
 # Page configuration
 st.set_page_config(
@@ -17,6 +24,17 @@ st.set_page_config(
 # Custom CSS
 with open('assets/app_style.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
+def check_api_status():
+    """Check Hugging Face API status"""
+    headers = {
+        "Authorization": f"Bearer {hugging_face_api_token}"
+    }
+    try:
+        response = requests.get("https://api-inference.huggingface.co/models", headers=headers)
+        return response.status_code == 200
+    except:
+        return False
 
 def main():
     st.title("🧬 Pathogen Evolution Explorer")
@@ -57,12 +75,20 @@ def main():
         selected_sample = st.sidebar.selectbox("Select sample dataset:", sample_options)
         sequences = get_sample_data(selected_sample)
 
+    # API Status indicator in sidebar
+    st.sidebar.header("API Status")
+    if check_api_status():
+        st.sidebar.success("Hugging Face API: Connected")
+    else:
+        st.sidebar.error("Hugging Face API: Not Connected")
+
     if sequences:
         # Analysis tabs
-        tab1, tab2, tab3 = st.tabs([
+        tab1, tab2, tab3, tab4 = st.tabs([
             "Sequence Statistics", 
             "Sequence Comparison", 
-            "Phylogenetic Analysis"
+            "Phylogenetic Analysis",
+            "AI Analysis"  # New tab for AI features
         ])
 
         with tab1:
@@ -98,6 +124,34 @@ def main():
             except Exception as e:
                 st.warning("Phylogenetic tree generation is currently under maintenance. Please check back later.")
                 st.info("You can still explore sequence statistics and comparisons in the other tabs.")
+
+        with tab4:
+            st.header("AI-Powered Sequence Analysis")
+            if hugging_face_api_token:
+                selected_sequence = st.selectbox(
+                    "Select a sequence for AI analysis:",
+                    list(sequences.keys())
+                )
+                
+                if st.button("Analyze Sequence"):
+                    try:
+                        headers = {
+                            "Authorization": f"Bearer {hugging_face_api_token}"
+                        }
+                        # Example API call - modify according to your needs
+                        response = requests.post(
+                            "https://api-inference.huggingface.co/models/your-model-here",
+                            headers=headers,
+                            json={"sequence": sequences[selected_sequence]}
+                        )
+                        if response.status_code == 200:
+                            st.json(response.json())
+                        else:
+                            st.error("API request failed")
+                    except Exception as e:
+                        st.error(f"Error during API call: {str(e)}")
+            else:
+                st.warning("Please configure your Hugging Face API token in the .env file")
 
 def create_similarity_heatmap(similarity_df):
     """Create a heatmap visualization of sequence similarities"""
