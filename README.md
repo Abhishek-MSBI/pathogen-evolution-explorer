@@ -7,7 +7,6 @@ sdk: streamlit
 sdk_version: 1.42.2
 app_file: app.py
 pinned: false
-short_description: A web-based application for analyzing pathogen genomic sequences
 ---
 
 # 🧬 Pathogen Evolution Explorer
@@ -128,4 +127,3 @@ If using GitHub Desktop:
 3. Select the project folder
 4. Make initial commit
 5. Publish repository
-````
